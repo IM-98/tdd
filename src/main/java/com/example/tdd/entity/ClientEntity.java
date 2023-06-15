@@ -1,14 +1,17 @@
 package com.example.tdd.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
 @Entity
 @Builder
+@AllArgsConstructor
 @Table(name = "client", schema = "tdd")
 public class ClientEntity {
 
@@ -37,5 +40,8 @@ public class ClientEntity {
     @Column(columnDefinition = "boolean default true")
     private boolean isActive;
 
+    public ClientEntity() {
+
+    }
 }
 

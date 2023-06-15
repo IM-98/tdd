@@ -21,7 +21,7 @@ public class ClientService {
         return clientRepository.saveAll(client);
     }
     Optional<ClientEntity> findByMail(String mail) throws Exception {
-        throw new Exception("Not implemented yet");
+        return clientRepository.findByEmail(mail);
     }
     Optional<ClientEntity> findById( Long id) throws Exception {
         throw new Exception("Not implemented yet");
@@ -29,8 +29,8 @@ public class ClientService {
     List<ClientEntity> findAllBySexe(SexeEnum sexe) throws Exception {
         throw new Exception("Not implemented yet");
     }
-    void deleteClient(Long id) throws Exception {
-        throw new Exception("Not implemented yet");
+    void deleteClient(ClientEntity client) throws Exception {
+        clientRepository.delete(client);
     }
 
     void setIsActive(Long id, boolean isActive) throws Exception {
