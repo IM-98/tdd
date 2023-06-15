@@ -1,12 +1,15 @@
 package com.example.tdd.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
 @Entity
+@Builder
 @Table(name = "client", schema = "tdd")
 public class ClientEntity {
 
@@ -26,7 +29,7 @@ public class ClientEntity {
     private String numeroTelephone;
 
     @Temporal(TemporalType.DATE)
-    private Date dateNaissance;
+    private LocalDate dateNaissance;
 
     @ManyToOne
     @JoinColumn(name = "sexe_id")

@@ -1,12 +1,14 @@
 package com.example.tdd.entity;
 
+import com.example.tdd.model.SexeEnum;
 import jakarta.persistence.*;
-import lombok.Data;
-
+import lombok.*;
 
 
 @Entity
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
 @Table(name = "sexe", schema = "tdd")
 public class SexeEntity {
 
@@ -14,6 +16,14 @@ public class SexeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
-    private String libelle;
+    private SexeEnum libelle;
+
+    public SexeEntity (SexeEnum roleName) {this.libelle = roleName;}
+
+    public String getLibelle() {
+        return libelle.toString();
+    }
+
 }

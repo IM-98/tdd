@@ -1,10 +1,7 @@
 package com.example.tdd.model;
 
 public enum SexeEnum {
-    HOMME("Homme"),
-    FEMME("Femme");
+    HOMME,
+    FEMME
 
-
-    SexeEnum(String sexe) {
-    }
 }
