@@ -1,7 +1,8 @@
-package com.example.tdd.repository;
+package com.example.tdd.services;
 
 import com.example.tdd.entity.ClientEntity;
 import com.example.tdd.model.SexeEnum;
+import com.example.tdd.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

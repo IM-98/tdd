@@ -1,36 +1,39 @@
 package com.example.tdd.entity;
 
-import com.example.tdd.model.SexeEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 
-
+import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "client")
+@Table(name = "client", schema = "tdd")
 public class ClientEntity {
 
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
     private String nom;
 
+    @Column(nullable = false)
     private String prenom;
 
     private String numeroTelephone;
 
-    private String dateNaissance;
+    @Temporal(TemporalType.DATE)
+    private Date dateNaissance;
 
-    @Column(columnDefinition = "ENUM('HOMME', 'FEMME')")
-    @Enumerated(EnumType.STRING)
-    private SexeEnum sexe;
+    @ManyToOne
+    @JoinColumn(name = "sexe_id")
+    private SexeEntity sexe;
 
+    @Column(columnDefinition = "boolean default true")
     private boolean isActive;
 
 }
+
