@@ -15,9 +15,9 @@ public class ClientService {
     private final ClientRepository clientRepository;
 
     List<ClientEntity> findAll() throws Exception {
-        throw new Exception("Not implemented yet");
+        return clientRepository.findAll();
     }
-    void addClient(List<ClientEntity> client) throws Exception {
+    List<ClientEntity> addClient(List<ClientEntity> client) throws Exception {
         throw new Exception("Not implemented yet");
     }
     Optional<ClientEntity> findByMail(String mail) throws Exception {
