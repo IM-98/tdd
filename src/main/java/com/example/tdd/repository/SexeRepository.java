@@ -10,6 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface SexeRepository extends JpaRepository<SexeEntity, Long> {
-    Optional<SexeEntity> findByLibelle(SexeEnum homme);
 }
 
