@@ -47,7 +47,7 @@ class ClientServiceTest {
         clients.add(client);
         List<ClientEntity> list = clientService.addClient(clients);
 
-        assertEquals( SexeEnum.HOMME, list.get(0).getSexe().getLibelle());
+        assertEquals( SexeEnum.HOMME, SexeEnum.valueOf(list.get(0).getSexe().getLibelle()));
 
     }
 
