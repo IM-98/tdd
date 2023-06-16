@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ClientService {
+public class ClientService implements IClientService{
     private final ClientRepository clientRepository;
 
     List<ClientEntity> findAll() throws Exception {
@@ -20,7 +20,7 @@ public class ClientService {
     List<ClientEntity> addClient(List<ClientEntity> client) throws Exception {
         return clientRepository.saveAll(client);
     }
-    Optional<ClientEntity> findByMail(String mail) throws Exception {
+    public Optional<ClientEntity> findByMail(String mail) throws Exception {
         return clientRepository.findByEmail(mail);
     }
     Optional<ClientEntity> findById( Long id) throws Exception {
@@ -41,5 +41,7 @@ public class ClientService {
         throw new Exception("Not implemented yet");
     }
 
-
+    Long count(){
+        return clientRepository.count();
+    }
 }

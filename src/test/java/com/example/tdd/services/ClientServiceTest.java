@@ -66,18 +66,24 @@ class ClientServiceTest {
     @Order(3)
     void findByMail() throws Exception {
         Optional<ClientEntity> client= clientService.findByMail("karim@gmail.com");
-        assertEquals(false, client.isEmpty());
+        assertFalse(client.isEmpty());
         assertEquals("karim", client.get().getPrenom());
         assertEquals(3, clientService.findAll().size());
     }
 
     @Test
+    void findByWrongMail() throws Exception {
+        Optional<ClientEntity> client= clientService.findByMail("**********");
+        assertTrue(client.isEmpty());
+    }
+
+
+    @Test
     @Order(4)
     void deleteClient() throws Exception {
-        assertEquals(3, clientService.findAll().size());
         client.setId(3L);
         clientService.deleteClient(client);
-        assertEquals(2, clientService.findAll().size());
+        assertEquals(2L, clientService.count());
     }
 
     @Test
