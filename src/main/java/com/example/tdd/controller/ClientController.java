@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -28,15 +29,17 @@ public class ClientController {
     @GetMapping(path = "/", produces = "application/json")
     public ResponseEntity<Object> findAll() throws Exception {
         List<ClientEntity> clients = clientService.findAll();
-
-       return new ResponseEntity<>(clients, HttpStatus.OK);
-//        throw new Exception("Not implemented");
+        if (clients.size() == 0)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public void findById(@PathVariable Long id) throws Exception {
-//        List<ClientEntity> clients= clientService.findById(id);
-        throw new Exception("Not implemented");
+    public ResponseEntity<Object> findById(@PathVariable Long id)  {
+        Optional<ClientEntity> client= clientService.findById(id);
+        if(client.isEmpty())
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
 
