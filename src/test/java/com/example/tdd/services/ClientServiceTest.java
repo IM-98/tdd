@@ -1,6 +1,7 @@
 package com.example.tdd.services;
 
 import com.example.tdd.entity.ClientEntity;
+import com.example.tdd.entity.SexeEntity;
 import com.example.tdd.model.SexeEnum;
 import com.example.tdd.repository.SexeRepository;
 import org.junit.jupiter.api.*;
@@ -59,7 +60,7 @@ class ClientServiceTest {
         assertEquals( SexeEnum.HOMME, SexeEnum.valueOf(list.get(0).getSexe().getLibelle()));
         assertEquals(client.getEmail(),list.get(0).getEmail());
         assertNotNull(list.get(0).getId());
-        assertEquals(3, clientService.findAll().size());
+        assertEquals(3, clientService.count());
     }
 
     @Test
@@ -68,7 +69,6 @@ class ClientServiceTest {
         Optional<ClientEntity> client= clientService.findByMail("karim@gmail.com");
         assertFalse(client.isEmpty());
         assertEquals("karim", client.get().getPrenom());
-        assertEquals(3, clientService.findAll().size());
     }
 
     @Test
@@ -80,34 +80,55 @@ class ClientServiceTest {
 
     @Test
     @Order(4)
-    void deleteClient() throws Exception {
-        client.setId(3L);
-        clientService.deleteClient(client);
-        assertEquals(2L, clientService.count());
+    void updateClient() {
+
+        client.setPrenom("karimBogoss");
+        clientService.updateClient(3L, client);
+        assertEquals("karimBogoss", clientService.findById(3L).get().getPrenom());
     }
 
     @Test
     @Order(5)
+    void deleteClient() throws Exception {
+        ClientEntity clientUpdated = clientService.findById(3L).get();
+        clientService.deleteClient(clientUpdated);
+        assertEquals(2, clientService.findAll().size());
+    }
+
+    @Test
+    @Order(6)
     void deleteClientNotExist() throws Exception {
         clientService.deleteClient(client);
         assertEquals(2, clientService.findAll().size());
     }
 
     @Test
-    void findById() {
+    void findById_Success() throws Exception {
+        Optional<ClientEntity> client1 = clientService.findById(1L);
+        assertEquals("karim@gmail.com", client1.get().getEmail());
+
     }
 
     @Test
-    void findAllBySexe() {
+    void findById_Fail() throws Exception{
+        Optional<ClientEntity> client1 = clientService.findById(10L);
+        assertTrue(client1.isEmpty());
+    }
+
+    @Test
+    void findAllBySexe() throws Exception {
+        List<ClientEntity> clients = clientService.findAllBySexe(SexeEnum.HOMME);
+        List<SexeEnum> sexeList = clients.stream().map(client -> SexeEnum.valueOf(client.getSexe().getLibelle())).distinct().toList();
+        assertTrue(sexeList.size() == 1 && sexeList.get(0) == SexeEnum.HOMME);
     }
 
 
     @Test
-    void setIsActive() {
+    void setIsActive() throws Exception {
+        clientService.setIsActive(1L, false);
+        assertFalse(clientService.findById(1L).get().isActive());
     }
 
-    @Test
-    void updateClient() {
-    }
+
 
 }

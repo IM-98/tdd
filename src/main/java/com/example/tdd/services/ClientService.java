@@ -7,38 +7,64 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ClientService implements IClientService{
+public class ClientService implements IClientService {
     private final ClientRepository clientRepository;
-
-    List<ClientEntity> findAll() throws Exception {
+    @Override
+    public List<ClientEntity> findAll() {
         return clientRepository.findAll();
     }
-    List<ClientEntity> addClient(List<ClientEntity> client) throws Exception {
+    @Override
+    public List<ClientEntity> addClient(List<ClientEntity> client)  {
         return clientRepository.saveAll(client);
     }
-    public Optional<ClientEntity> findByMail(String mail) throws Exception {
+    @Override
+    public Optional<ClientEntity> findByMail(String mail)  {
         return clientRepository.findByEmail(mail);
     }
-    Optional<ClientEntity> findById( Long id) throws Exception {
-        throw new Exception("Not implemented yet");
+    @Override
+    public Optional<ClientEntity> findById( Long id) {
+        return clientRepository.findById(id);
     }
-    List<ClientEntity> findAllBySexe(SexeEnum sexe) throws Exception {
-        throw new Exception("Not implemented yet");
+    @Override
+    public List<ClientEntity> findAllBySexe(SexeEnum sexe) {
+        return clientRepository.findAllBySexe_Libelle(sexe);
     }
-    void deleteClient(ClientEntity client) throws Exception {
+    @Override
+    public void deleteClient(ClientEntity client) {
         clientRepository.delete(client);
     }
-
-    void setIsActive(Long id, boolean isActive) throws Exception {
-        throw new Exception("Not implemented yet");
+    @Override
+    public void setIsActive(Long id, boolean isActive)  {
+        Optional<ClientEntity> client = clientRepository.findById(id);
+        if(client.isPresent()){
+            client.get().setActive(isActive);
+            clientRepository.save(client.get());
+        } else {
+            throw new NoSuchElementException("Client not found");
+        }
     }
+    @Override
+    public void updateClient(Long id, ClientEntity client) {
+      //check if client exist and then save it to update
+        Optional<ClientEntity> clientToUpdate = clientRepository.findById(id);
+        if(clientToUpdate.isPresent()){
+            clientToUpdate.get().setEmail(client.getEmail());
+            clientToUpdate.get().setNom(client.getNom());
+            clientToUpdate.get().setPrenom(client.getPrenom());
+            clientToUpdate.get().setNumeroTelephone(client.getNumeroTelephone());
+            clientToUpdate.get().setDateNaissance(client.getDateNaissance());
+            clientToUpdate.get().setSexe(client.getSexe());
+            clientToUpdate.get().setActive(client.isActive());
+            clientRepository.save(clientToUpdate.get());
+        } else {
+            throw new NoSuchElementException("Client not found");
+        }
 
-    void updateClient(Long id, ClientEntity client) throws Exception {
-        throw new Exception("Not implemented yet");
     }
 
     Long count(){
