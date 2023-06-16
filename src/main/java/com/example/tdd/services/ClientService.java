@@ -67,7 +67,8 @@ public class ClientService implements IClientService {
 
     }
 
-    Long count(){
+    @Override
+    public Long count(){
         return clientRepository.count();
     }
 }

@@ -11,12 +11,14 @@ public interface IClientService {
     List<ClientEntity> findAll();
     List<ClientEntity> addClient(List<ClientEntity> client);
     Optional<ClientEntity> findByMail(String mail);
-    Optional<ClientEntity> findById( Long id) throws Exception;
-    List<ClientEntity> findAllBySexe(SexeEnum sexe) throws Exception;
+    Optional<ClientEntity> findById( Long id);
+    List<ClientEntity> findAllBySexe(SexeEnum sexe);
     void deleteClient(ClientEntity client);
 
-    void setIsActive(Long id, boolean isActive) throws Exception;
+    void setIsActive(Long id, boolean isActive);
 
-    void updateClient(Long id, ClientEntity client) throws Exception;
+    void updateClient(Long id, ClientEntity client);
+
+    Long count();
 
 }

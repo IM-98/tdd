@@ -8,6 +8,7 @@ import lombok.*;
 @Entity
 @Setter
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "sexe", schema = "tdd")
 public class SexeEntity {

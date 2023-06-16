@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ClientServiceTest {
 
     @Autowired
-    private ClientService clientService;
+    private IClientService clientService;
     @Autowired
     private SexeRepository sexeRepository;
 
